@@ -22,17 +22,17 @@ upstreams:
         weight: 100
       - target: <ip-privada-monitoring-app-c>:8080
         weight: 100
-    #healthchecks:
-    #  threshold: 0
-    #  active:
-    #    http_path: /health/
-    #    timeout: 0
-    #    healthy:
-    #      successes: 0
-    #      interval: 0
-    #    unhealthy:
-    #      tcp_failures: 0
-    #      interval: 0
+    healthchecks:
+      threshold: 35
+      active:
+        http_path: /health/
+        timeout: 5
+        healthy:
+          successes: 3
+          interval: 5
+        unhealthy:
+          tcp_failures: 1
+          interval: 6
 
 
 
