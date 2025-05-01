@@ -3,7 +3,7 @@ from historias.models import Historia
 
 
 class Evento(models.Model):
-    fecha=models.DateField(auto_created=True, auto_now=True)
+    fecha=models.DateField()
     historiaPaciente=models.ForeignKey(Historia, on_delete=models.CASCADE, default=None)
     especialidad=models.CharField(max_length=100, default="Consulta General")
     comentarios=models.TextField(default=None)
