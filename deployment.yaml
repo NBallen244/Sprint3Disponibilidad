@@ -161,103 +161,9 @@ resources:
           echo "max_connections=2000" | sudo tee -a /etc/postgresql/12/main/postgresql.conf
           sudo service postgresql restart
 
-# Alarms instances
-- type: compute.v1.instance
-  name: cbd-alarms-app-a
-  properties:
-    zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/zones/us-central1-a/machineTypes/e2-micro
-    disks:
-    - deviceName: boot
-      type: PERSISTENT
-      boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
-    networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/global/networks/default
-      networkIP: 10.128.0.53
-    tags:
-      items: 
-      - cbd-services-firewall
-    metadata:
-      items:
-      - key: startup-script
-        value: |
-          #!/bin/bash
-          sudo apt-get update
-          sudo apt install python3-pip -y
-          sudo mkdir /labs
-          cd /labs
-          sudo git clone https://github.com/ISIS2503/ISIS2503-MonitoringApp.git
-          cd ISIS2503-MonitoringApp
-          sudo git checkout Circuit-Breaker
-          sudo pip3 install -r requirements.txt
-- type: compute.v1.instance
-  name: cbd-alarms-app-b
-  properties:
-    zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/zones/us-central1-a/machineTypes/e2-micro
-    disks:
-    - deviceName: boot
-      type: PERSISTENT
-      boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
-    networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/global/networks/default
-      networkIP: 10.128.0.54
-    tags:
-      items: 
-      - cbd-services-firewall
-    metadata:
-      items:
-      - key: startup-script
-        value: |
-          #!/bin/bash
-          sudo apt-get update
-          sudo apt install python3-pip -y
-          sudo mkdir /labs
-          cd /labs
-          sudo git clone https://github.com/ISIS2503/ISIS2503-MonitoringApp.git
-          cd ISIS2503-MonitoringApp
-          sudo git checkout Circuit-Breaker
-          sudo pip3 install -r requirements.txt
-- type: compute.v1.instance
-  name: cbd-alarms-app-c
-  properties:
-    zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/zones/us-central1-a/machineTypes/e2-micro
-    disks:
-    - deviceName: boot
-      type: PERSISTENT
-      boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
-    networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/global/networks/default
-      networkIP: 10.128.0.55
-    tags:
-      items: 
-      - cbd-services-firewall
-    metadata:
-      items:
-      - key: startup-script
-        value: |
-          #!/bin/bash
-          sudo apt-get update
-          sudo apt install python3-pip -y
-          sudo mkdir /labs
-          cd /labs
-          sudo git clone https://github.com/ISIS2503/ISIS2503-MonitoringApp.git
-          cd ISIS2503-MonitoringApp
-          sudo git checkout Circuit-Breaker
-          sudo pip3 install -r requirements.txt
 # Monitoring app instance
 - type: compute.v1.instance
-  name: cbd-monitoring-app
+  name: cbd-monitoring-app-a
   properties:
     zone: us-central1-a
     machineType: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/zones/us-central1-a/machineTypes/e2-micro
@@ -283,8 +189,76 @@ resources:
           sudo apt install python3-pip -y
           sudo mkdir /labs
           cd /labs
-          sudo git clone https://github.com/ISIS2503/ISIS2503-MonitoringApp.git
-          cd ISIS2503-MonitoringApp
+          sudo git clone https://github.com/NBallen244/Sprint3Disponibilidad.git
+          cd Sprint3Disponibilidad
+          sudo git checkout Circuit-Breaker
+          sudo pip3 install -r requirements.txt
+          sudo python3 manage.py makemigrations
+          sudo python3 manage.py migrate
+
+- type: compute.v1.instance
+  name: cbd-monitoring-app-b
+  properties:
+    zone: us-central1-a
+    machineType: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/zones/us-central1-a/machineTypes/e2-micro
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
+    networkInterfaces:
+    - network: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/global/networks/default
+      networkIP: 10.128.0.56
+    tags:
+      items: 
+      - cbd-services-firewall
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/bin/bash
+          sudo apt-get update
+          sudo apt install python3-pip -y
+          sudo mkdir /labs
+          cd /labs
+          sudo git clone https://github.com/NBallen244/Sprint3Disponibilidad.git
+          cd Sprint3Disponibilidad
+          sudo git checkout Circuit-Breaker
+          sudo pip3 install -r requirements.txt
+          sudo python3 manage.py makemigrations
+          sudo python3 manage.py migrate
+
+- type: compute.v1.instance
+  name: cbd-monitoring-app-c
+  properties:
+    zone: us-central1-a
+    machineType: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/zones/us-central1-a/machineTypes/e2-micro
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
+    networkInterfaces:
+    - network: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/global/networks/default
+      networkIP: 10.128.0.56
+    tags:
+      items: 
+      - cbd-services-firewall
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/bin/bash
+          sudo apt-get update
+          sudo apt install python3-pip -y
+          sudo mkdir /labs
+          cd /labs
+          sudo git clone https://github.com/NBallen244/Sprint3Disponibilidad.git
+          cd Sprint3Disponibilidad
           sudo git checkout Circuit-Breaker
           sudo pip3 install -r requirements.txt
           sudo python3 manage.py makemigrations
